@@ -1,26 +1,48 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '../views/Login'
-import Home from '../views/Home'
 
-Vue.use(Router);
+Vue.use(Router)
+
+/* Layout */
+import Layout from '../views/layout/Layout'
+
+export const constantRouterMap = [
+  {path: '/login', component: () => import('@/views/login/index'), hidden: true},
+  {path: '/404', component: () => import('@/views/404'), hidden: true},
+  {
+    path: '',
+    component: Layout,
+    redirect: '/home',
+    children: [{
+      path: 'home',
+      name: 'home',
+      component: () => import('@/views/home/index'),
+      meta: {title: '首页', icon: 'home'}
+    }]
+  }
+]
+
+export const asyncRouterMap = [
+  {
+    path:'/ums',
+    component: Layout,
+    redirect: '/ums/user',
+    name: 'ums',
+    meta: {title: '权限', icon: 'ums'},
+    // children: [
+    //   {
+    //     path: 'user',
+    //     name: 'user',
+    //     component: () => import('@/views/ums/user/index'),
+    //     meta: {title: '用户列表', icon: 'ums-admin'}
+    //   },
+    // ]
+  },
+  {path: '*', redirect: '/404', hidden: true}
+]
 
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'Login',
-      component: Login,
-      hidden: true,
-    },
-    {
-      path: '/home',
-      name: '主页',
-      component: Home,
-      hidden: true,
-      meta: {
-        roles: ['admin', 'user'],
-      }
-    }
-  ]
+  // mode: 'history', //后端支持可开
+  scrollBehavior: () => ({y: 0}),
+  routes: constantRouterMap
 })
