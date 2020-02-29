@@ -1,15 +1,17 @@
 <template>
   <div class="menu-wrapper">
     <template v-for="item in routes" v-if="!item.hidden&&item.children">
-
-      <router-link v-if="hasOneShowingChildren(item.children) && !item.children[0].children&&!item.alwaysShow" :to="item.path+'/'+item.children[0].path"
-                   :key="item.children[0].name">
+      
+      <!-- 跳转链接：叶子节点，独生子 -->
+      <router-link v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow" 
+      :to="item.path+'/'+item.children[0].path" :key="item.children[0].name">
         <el-menu-item :index="item.path+'/'+item.children[0].path" :class="{'submenu-title-noDropdown':!isNest}">
           <svg-icon v-if="item.children[0].meta&&item.children[0].meta.icon" :icon-class="item.children[0].meta.icon"></svg-icon>
           <span v-if="item.children[0].meta&&item.children[0].meta.title" slot="title">{{item.children[0].meta.title}}</span>
         </el-menu-item>
       </router-link>
 
+      <!-- 父菜单 -->
       <el-submenu v-else :index="item.name||item.path" :key="item.name">
         <template slot="title">
           <svg-icon v-if="item.meta&&item.meta.icon" :icon-class="item.meta.icon"></svg-icon>
@@ -33,27 +35,42 @@
 </template>
 
 <script>
-  export default {
-    name: 'SidebarItem',
-    props: {
-      routes: {
-        type: Array
-      },
-      isNest: {
-        type: Boolean,
-        default: false
-      }
+export default {
+  name: 'SidebarItem',
+  props: {
+    routes: {
+      type: Array
     },
-    methods: {
-      hasOneShowingChildren(children) {
-        const showingChildren = children.filter(item => {
-          return !item.hidden
-        })
-        if (showingChildren.length === 1) {
+    isNest: {
+      type: Boolean,
+      default: false
+    }
+  },
+  mounted() {
+    console.log(this.routes)
+  },
+  methods: {
+    hasOneShowingChild(children = [], parent) {
+      const showingChildren = children.filter(item => {
+        if (item.hidden) {
+          return false
+        } else {
+          // Temp set(will be used if only has one showing child)
+          this.onlyOneChild = item
           return true
         }
-        return false
+      })
+      // When there is only one child router, the child router is displayed by default
+      if (showingChildren.length === 1) {
+        return true
       }
+      // Show parent if there are no child router to display
+      if (showingChildren.length === 0) {
+        this.onlyOneChild = { ... parent, path: '', noShowingChildren: true }
+        return true
+      }
+      return false
     }
   }
+}
 </script>

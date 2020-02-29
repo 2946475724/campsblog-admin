@@ -9,7 +9,7 @@
         <div style="text-align: center">
           <svg-icon icon-class="login-mall" style="width: 56px;height: 56px;color: #409EFF"></svg-icon>
         </div>
-        <h2 class="login-title color-main">campusblog</h2>
+        <h2 class="login-title color-main">mall-admin-web</h2>
         <el-form-item prop="username">
           <el-input name="username"
                     type="text"
@@ -51,6 +51,7 @@
   import {isvalidUsername} from '@/utils/validate';
   import {setSupport,getSupport,setCookie,getCookie} from '@/utils/support';
   import login_center_bg from '@/assets/images/login_center_bg.png'
+
   export default {
     name: 'login',
     data() {
@@ -80,6 +81,8 @@
         loading: false,
         pwdType: 'password',
         login_center_bg,
+        dialogVisible:false,
+        supportDialogVisible:false
       }
     },
     created() {
@@ -136,9 +139,11 @@
     margin: 140px auto;
     border-top: 10px solid #409EFF;
   }
+
   .login-title {
     text-align: center;
   }
+
   .login-center-layout {
     background: #409EFF;
     width: auto;
