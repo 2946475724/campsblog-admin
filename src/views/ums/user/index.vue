@@ -1,4 +1,4 @@
-<template>
+<template> 
   <div class="app-container">
     <el-card class="filter-container" shadow="never">
       <div>
@@ -155,6 +155,7 @@
   import {fetchList,createAdmin,updateAdmin,updateStatus,deleteAdmin,getRoleByAdmin,allocRole} from '@/api/login';
   import {fetchAllRoleList} from '@/api/role';
   import {formatDate} from '@/utils/date';
+
   const defaultListQuery = {
     pageNum: 1,
     pageSize: 10,
@@ -339,3 +340,5 @@
   }
 </script>
 <style></style>
+
+
