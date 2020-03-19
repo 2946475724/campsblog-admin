@@ -6,10 +6,7 @@
                :rules="loginRules"
                ref="loginForm"
                label-position="left">
-        <div style="text-align: center">
-          <svg-icon icon-class="login-mall" style="width: 56px;height: 56px;color: #409EFF"></svg-icon>
-        </div>
-        <h2 class="login-title color-main">mall-admin-web</h2>
+        <h2 class="login-title color-main">CampusBlog后台</h2>
         <el-form-item prop="username">
           <el-input name="username"
                     type="text"
@@ -32,7 +29,7 @@
             <svg-icon icon-class="password" class="color-main"></svg-icon>
           </span>
             <span slot="suffix" @click="showPwd">
-            <svg-icon icon-class="eye" class="color-main"></svg-icon>
+            <svg-icon icon-class="eye" class="color-main eye" style="cursor: pointer;"></svg-icon>
           </span>
           </el-input>
         </el-form-item>
@@ -43,14 +40,13 @@
         </el-form-item>
       </el-form>
     </el-card>
-    <img :src="login_center_bg" class="login-center-layout">
   </div>
 </template>
 
 <script>
   import {isvalidUsername} from '@/utils/validate';
   import {setSupport,getSupport,setCookie,getCookie} from '@/utils/support';
-  import login_center_bg from '@/assets/images/login_center_bg.png'
+  
 
   export default {
     name: 'login',
@@ -80,7 +76,6 @@
         },
         loading: false,
         pwdType: 'password',
-        login_center_bg,
         dialogVisible:false,
         supportDialogVisible:false
       }

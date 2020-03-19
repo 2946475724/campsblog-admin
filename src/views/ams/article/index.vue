@@ -31,7 +31,7 @@
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets"></i>
       <span>数据列表</span>
-      <el-button class="btn-add" @click="handleAddProduct()" size="mini">
+      <el-button class="btn-add" @click="handleAddArticle()" size="mini">
         添加
       </el-button>
     </el-card>
@@ -49,13 +49,13 @@
                 <template slot-scope="scope">{{scope.row.title}}</template>
             </el-table-column>
             <el-table-column label="作者" align="center">
-                <template slot-scope="scope">{{scope.row.categoryId}}</template>
+                <template slot-scope="scope">{{scope.row.username}}</template>
             </el-table-column>
             <el-table-column label="文章类型" align="center">
-                <template slot-scope="scope">{{scope.row.categoryId}}</template>
+                <template slot-scope="scope">{{scope.row.cateName}}</template>
             </el-table-column>
             <el-table-column label="发布时间" align="center">
-                <template slot-scope="scope">{{scope.row.createTime}}</template>
+                <template slot-scope="scope">{{scope.row.createTime | dateFormat}}</template>
             </el-table-column>
             <el-table-column label="操作" width="160" align="center">
                 <template slot-scope="scope">
@@ -116,7 +116,10 @@ export default {
                 this.list = response.data.list;
                 this.total = response.data.total;
             })
-        }
+        },
+        handleAddArticle() {
+          this.$router.push({path:'/ams/addArticle'});
+        },
     },
 };
 </script>
